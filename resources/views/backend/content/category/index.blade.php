@@ -82,6 +82,10 @@
                                 <input class="form-control form-control-lg bg-dark" name="category_icon"
                                     id="category_icon" type="file">
                             </div>
+                            <div class="mt-4 mb-4">
+                                <input class="form-control form-control-lg bg-dark" name="category_image"
+                                    id="category_image" type="file">
+                            </div>
                             <br>
                             <div class="form-group mt-2" style="text-align: right">
                                 <div class="submitBtnSCourse">
@@ -132,6 +136,17 @@
                                 style="text-align: center;height: 100px;margin-top:20px !important">
                                 <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
                                 <div id="previmg" style="float: left;"></div>
+                            </div>
+                            <div class="mt-4 mb-4">
+                                <input class="form-control form-control-lg bg-dark" name="category_image"
+                                    id="category_image" type="file">
+                            </div>
+                            <input type="text" name="category_id" id="category_id" hidden>
+
+                            <div class="m-3 ms-0 mb-0"
+                                style="text-align: center;height: 100px;margin-top:20px !important">
+                                <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
+                                <div id="previmage" style="float: left;"></div>
                             </div>
                             <br>
                             <div class="form-group mt-2" style="text-align: right">
@@ -232,6 +247,7 @@
                 success: function(data) {
                     $('#category_name').val('');
                     $('#category_icon').val('');
+                    $('#category_image').val('');
                     $('#position').val('');
 
                     swal({
@@ -262,6 +278,9 @@
                     $('#previmg').html('');
                     $('#previmg').append(`
                         <img  src="../` + data.category_icon + `" alt = "" style="height: 80px" />
+                    `);
+                    $('#previmage').append(`
+                        <img  src="../` + data.category_image + `" alt = "" style="height: 80px" />
                     `);
 
                     $('#EditCategory').attr('data-id', data.id);
