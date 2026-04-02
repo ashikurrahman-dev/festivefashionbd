@@ -84,14 +84,14 @@
         }
     </style>
 
-    <div class="p-0 container-fluid">
+    <div class="p-0 container" style="margin-top:15px;">
         <div class="p-0 row">
             <div class="col-12 col-lg-12">
                 <div class="owl-carousel owl-theme" id="slider">
                     @forelse ($sliders as $slider)
                         <div class="item" style="margin:0 !important;">
                             <a href="{{ $slider->slider_btn_link }}">
-                                <img src="{{ asset($slider->slider_image) }}">
+                                <img style="border-radius: 6px;" src="{{ asset($slider->slider_image) }}">
                             </a>
                         </div>
                     @empty
@@ -103,9 +103,12 @@
 
     {{-- category --}}
     <section>
-        <div class="p-0 mt-4 mb-2 container-fluid mt-lg-4 pt-lg-4">
+        <div class="p-0 mt-4 mb-2 container mt-lg-4 pt-lg-4">
+            <div class="category-title">
+                <span>TOP CATEGORIES</span>
+            </div>
             <div class="owl-carousel category-product-carousel">
-                <div class="text-center item">
+                <!-- <div class="text-center item">
                     <a href="{{ route('all-product') }}" class="text-decoration-none">
                         <div id="cath">
                             <div class="d-flex justify-content-center">
@@ -116,7 +119,7 @@
                             </p>
                         </div>
                     </a>
-                </div>
+                </div> -->
                 @forelse ($categories as $category)
                     <div class="text-center item">
                         <a href="{{ url('products/category/' . $category->slug) }}" class="text-decoration-none">
@@ -124,9 +127,9 @@
                                 <div class="d-flex justify-content-center">
                                     <img src="{{ asset($category->category_icon) }}" id="catimg" alt="{{ $category->category_name }}">
                                 </div>
-                                <p id="catp" style="font-weight:bold;color:black;">
+                                <!-- <p id="catp" style="font-weight:bold;color:black;">
                                     {{ $category->category_name }}
-                                </p>
+                                </p> -->
                             </div>
                         </a>
                     </div>
@@ -138,8 +141,8 @@
     </section>
 
     {{-- featured section --}}
-    <section>
-        <div class="container-fluid">
+    <!-- <section>
+        <div class="container">
             <div class="feature-section d-sm-none">
                 <div class="features-wrapper">
 
@@ -176,10 +179,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     {{-- best sellig product  --}}
-    <div class="py-3 container-fluid">
+    <div class="py-3 container">
         <h2 class="m-0 category-product-secname">Best Selling Product</h2>
         <div class="mt-2 owl-carousel bestselling-carousel">
             @forelse ($topproducts as $promotional)
@@ -258,7 +261,7 @@
     @endif
 
     {{-- all product  --}}
-    <div class="py-3 container-fluid">
+    <div class="py-3 container">
         <h2 class="m-0 category-product-secname">All Products</h2>
         <div class="mt-2 row g-2">
             @forelse ($allproducts as $promotional)
@@ -332,7 +335,7 @@
 
     {{-- <section class="mt-5">
         @forelse ($categoryproducts as $key => $categoryproduct)
-            <div class="py-2 container-fluid">
+            <div class="py-2 container">
                 <h2 class="m-0 category-product-secname">{{ $categoryproduct->category_name }}</h2>
 
                 <div class="mt-2 owl-carousel category-carousel">
@@ -648,7 +651,7 @@
                     items: 6
                 },
                 992: {
-                    items: 10
+                    items: 9
                 }
             }
         });
