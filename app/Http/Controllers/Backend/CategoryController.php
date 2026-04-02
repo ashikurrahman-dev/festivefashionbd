@@ -32,6 +32,7 @@ class CategoryController extends Controller
         $category =new Category();
         $category->category_name =$request->category_name;
         $category->position =$request->position;
+
         $category_icon = $request->file('category_icon');
         $name = time() . "_" . $category_icon->getClientOriginalName();
         $uploadPath = ('public/images/category/'); 
@@ -42,6 +43,19 @@ class CategoryController extends Controller
         $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
         imagewebp($im, $new_webp, 50);
         $category->category_icon = $new_webp; 
+
+        if($request->file('category_image')){
+            $category_image = $request->file('category_image');
+            $name = time() . "_" . $category_image->getClientOriginalName();
+            $uploadPath = ('public/images/category/'); 
+            $category_image->move($uploadPath, $name);
+            $category_image_url = $uploadPath . $name;
+            $webp = $category_image_url;
+            $im = imagecreatefromstring(file_get_contents($webp));
+            $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
+            imagewebp($im, $new_webp, 50);
+            $category->category_image = $new_webp; 
+        }
         $category->save();
         return response()->json($category, 200);
     }
@@ -99,6 +113,18 @@ class CategoryController extends Controller
             $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
             imagewebp($im, $new_webp, 50);
             $category->category_icon = $new_webp;
+        }
+        if($request->category_image){ 
+            $category_image = $request->file('category_image');
+            $name = time() . "_" . $category_image->getClientOriginalName();
+            $uploadPath = ('public/images/category/'); 
+            $category_image->move($uploadPath, $name);
+            $category_ImgUrl = $uploadPath . $name; 
+            $webp = $category_ImgUrl;
+            $im = imagecreatefromstring(file_get_contents($webp));
+            $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
+            imagewebp($im, $new_webp, 50);
+            $category->category_image = $new_webp;
         }
         $category->save();
         return response()->json($category, 200);
