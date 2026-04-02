@@ -182,7 +182,7 @@
     </section> -->
 
     {{-- best sellig product  --}}
-    <div class="py-3 container">
+    <!-- <div class="py-3 container">
         <h2 class="m-0 category-product-secname">Best Selling Product</h2>
         <div class="mt-2 owl-carousel bestselling-carousel">
             @forelse ($topproducts as $promotional)
@@ -245,10 +245,10 @@
         <a href="{{ route('best-selling-product') }}" class="my-1 view-all-link" style="background: red;color: #fff;padding: 10px 45px;font-size: 16px;border-radius: 8px;position: absolute;">
             View All
         </a>
-    </div>
+    </div> -->
 
     {{-- promotional banner 1 --}}
-    @if ($ad_one)
+    <!-- @if ($ad_one)
         <section>
             <div class="my-3 mt-5 row">
                 <div class="col-12">
@@ -258,10 +258,10 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif -->
 
     {{-- all product  --}}
-    <div class="py-3 container">
+    <!-- <div class="py-3 container">
         <h2 class="m-0 category-product-secname">All Products</h2>
         <div class="mt-2 row g-2">
             @forelse ($allproducts as $promotional)
@@ -328,12 +328,12 @@
                 View All
             </a>
         </div>
-    </div>
+    </div> -->
 
 
     {{-- category wise product --}}
 
-    {{-- <section class="mt-5">
+    <section class="mt-5">
         @forelse ($categoryproducts as $key => $categoryproduct)
             <div class="py-2 container">
                 <h2 class="m-0 category-product-secname">{{ $categoryproduct->category_name }}</h2>
@@ -399,10 +399,10 @@
             </div>
         @empty
         @endforelse
-    </section> --}}
+    </section>
 
     {{-- newslatter --}}
-    <section class="py-2 newsletter-section">
+    <!-- <section class="py-2 newsletter-section">
         <div class="container text-center">
 
             <h2 class="m-0 mb-2 fw-bold">Newsletter</h2>
@@ -415,7 +415,7 @@
                     @csrf
                     <div class="input-group">
                         <input type="email" name="email" class="border form-control border-danger" placeholder="Your Email Address" style="height: 46px">
-                        <!-- Subscribe Button -->
+                        
                         <button type="submit" class="gap-2 px-4 btn btn-danger d-flex align-items-center" style="height: 46px;">
                             <i class="bi bi-send"></i> Subscribe
                         </button>
@@ -424,7 +424,7 @@
             </div>
 
         </div>
-    </section>
+    </section> -->
 
 
     <script>
@@ -490,7 +490,7 @@
 
 
     {{-- promotional banner 2 --}}
-    @if ($ad_two)
+    <!-- @if ($ad_two)
         <section>
             <div class="my-3 row">
                 <div class="col-12">
@@ -500,7 +500,7 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif -->
 
 
     @if (Auth::id())
