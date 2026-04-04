@@ -46,15 +46,15 @@ class CategoryController extends Controller
 
         if($request->file('category_image')){
             $category_image = $request->file('category_image');
-            $name = time() . "_" . $category_image->getClientOriginalName();
-            $uploadPath = ('public/images/category/'); 
-            $category_image->move($uploadPath, $name);
-            $category_image_url = $uploadPath . $name;
-            $webp = $category_image_url;
-            $im = imagecreatefromstring(file_get_contents($webp));
-            $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
-            imagewebp($im, $new_webp, 50);
-            $category->category_image = $new_webp; 
+            $image_name = time() . "_" . $category_image->getClientOriginalName();
+            $uploadImagePath = ('public/images/category/'); 
+            $category_image->move($uploadImagePath, $image_name);
+            $category_image_url = $uploadImagePath . $image_name;
+            $extention = $category_image_url;
+            $image = imagecreatefromstring(file_get_contents($extention));
+            $new_image = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $extention);
+            imagewebp($image, $new_image, 50);
+            $category->category_image = $new_image; 
         }
         $category->save();
         return response()->json($category, 200);
@@ -122,9 +122,9 @@ class CategoryController extends Controller
             $category_ImgUrl = $uploadPath . $name; 
             $webp = $category_ImgUrl;
             $im = imagecreatefromstring(file_get_contents($webp));
-            $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
-            imagewebp($im, $new_webp, 50);
-            $category->category_image = $new_webp;
+            $new_image = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
+            imagewebp($im, $new_image, 50);
+            $category->category_image = $new_image;
         }
         $category->save();
         return response()->json($category, 200);
