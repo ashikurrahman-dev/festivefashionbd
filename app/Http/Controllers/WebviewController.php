@@ -173,7 +173,7 @@ class WebviewController extends Controller
         $addbottoms = Addbanner::where('status', 'Active')->whereIn('id', ['3', '4'])->select('id', 'add_link', 'add_image', 'status')->get();
 
         $topproducts = Mainproduct::where('status', 'Active')->where('top_rated', '1')->orderByRaw('ISNULL(`position`), `position` ASC')->select('id', 'ProductName', 'ProductSlug', 'ProductImage', 'status', 'position', 'top_rated', 'RelatedProductIds')->inRandomOrder()->get();
-        $categoryproducts = Category::where('status', 'Active')->where('front_status', 0)->select('id', 'category_name', 'slug', 'position')->orderBy('position')->get();
+        $categoryproducts = Category::where('status', 'Active')->where('front_status', 0)->select('id', 'category_name', 'slug', 'position', 'category_image')->orderBy('position')->get();
         $allproducts = Mainproduct::where('status', 'Active')->select('id', 'ProductName', 'ProductSlug', 'ProductImage', 'status', 'position', 'top_rated', 'RelatedProductIds')->latest()->take(18)->get();
 
         $ad_one = Addbanner::where('status', 'Active')->whereIn('id', ['1'])->first();

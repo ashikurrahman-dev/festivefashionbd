@@ -14,7 +14,7 @@
 }
 
 .product-image {
-    height: 208px;
+    /* height: 208px; */
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -606,7 +606,7 @@ button #purcheseBtn {
 
 @media screen and (max-width: 768px) {
     .product-image {
-        height: 134px;
+        /* height: 134px; */
         width: 100%;
         position: relative;
         overflow: hidden;
