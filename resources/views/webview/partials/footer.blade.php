@@ -65,6 +65,13 @@
             text-align: left;
         }
 
+        .copyright{
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+
         @media only screen and (max-width: 991px) {
             footer {
                 padding-bottom: 75px;
@@ -73,30 +80,47 @@
     </style>
     <footer class="pt-5 pb-4 text-light">
         <div class="container">
-            <div class="row gy-4" style="text-align:center;">
+            <div class="row gy-4" style="border-bottom: 2px solid white;">
 
                 <!-- Logo + Description -->
-                <div class="col-lg-4 col-12">
+                <div class="col-lg-3 col-12">
                     <img src="{{ asset($basicinfo->page_image) }}" alt="Logo" style="max-width:200px;">
                     <p class="mt-3 text-white" style="line-height: 1.4;">
-                        {{ env('APP_NAME') }} is a growing digital commerce brand delivering quality products and a trusted shopping experience across Bangladesh
+                        {{ env('APP_NAME') }} is a One of the largest Islamic Lifestyle brands in Bangladesh
                     </p>
+                    <!-- Social Icons -->
+                    <div class="my-3 social-icons">
+                        <a href="{{ $basicinfo->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ $basicinfo->linkedin }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="{{ $basicinfo->youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="{{ $basicinfo->pinterest }}" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>  
                 </div>
 
                 <!-- Shop by Category -->
-                <div class="col-lg-3 col-6">
-                    <h5 class="m-0 mb-3 text-white fw-bold">Shop by Category</h5>
+                <div class="col-lg-3 col-12">
+                    <h5 class="m-0 mb-3 text-white fw-bold"><span style="border-bottom: 1px solid white;">
+                        Account
+                    </span></h5>
                     <ul class="list-unstyled footer-links">
-                        @foreach ($categories as $category)
+                        <!-- @foreach ($categories as $category)
                             <li><a href="{{ url('products/category/' . $category->slug) }}"
                                     class="text-light">{{ $category->category_name }}</a></li>
-                        @endforeach
+                        @endforeach -->
+                        <li><a href="{{ url('/login') }}"
+                                    class="text-light">My Account</a>
+                        </li>
+                        <li><a href="{{ url('/track-order') }}"
+                                    class="text-light">Track My Order</a>
+                        </li>
                     </ul>
                 </div>
 
                 <!-- About Us -->
-                <div class="col-lg-2 col-6">
-                    <h5 class="m-0 mb-3 text-white fw-bold">About Us</h5>
+                <div class="col-lg-3 col-12">
+                    <h5 class="m-0 mb-3 text-white fw-bold"><span style="border-bottom: 1px solid white;">
+                        Information
+                    </span></h5>
                     <ul class="list-unstyled footer-links">
                         <li><a href="{{ url('venture/about_us') }}" class="text-light">About Us</a></li>
                         <li><a href="{{ url('venture/contact_us') }}" class="text-light">Contact Us</a></li>
@@ -109,25 +133,26 @@
 
                 <!-- Contact -->
                 <div class="col-lg-3 col-12" style="padding-bottom:45px">
-                    <h5 class="m-0 mb-3 text-white fw-bold">Get in Touch</h5>
+                    <h5 class="m-0 mb-3 text-white fw-bold"><span style="border-bottom: 1px solid white;">
+                        Talk To Us
+                    </span></h5>
 
-                    <p class="m-0 mb-2 text-white"><i class="bi bi-telephone"></i> {{ $basicinfo->phone_one }}</p>
-                    <p class="m-0 mb-2 text-white"><i class="bi bi-envelope"></i> {{ $basicinfo->email }}</p>
-                    <p class="m-0 mb-2 text-white">
-                        <i class="bi bi-geo-alt"></i>
-                        {{ $basicinfo->address }}
+                    <p class="m-0 mb-2 text-white"><i style="margin-right:5px;" class="fa-solid fa-phone"></i> {{ $basicinfo->phone_one }}</p>
+                    <p class="m-0 mb-2 text-white"><i style="margin-right:5px;" class="fa-solid fa-envelope"></i> {{ $basicinfo->email }}</p>
+                    <p class="m-0 mb-2 text-white">                        
+                        <i style="margin-right:5px;" class="fa-solid fa-location-dot"></i>{{ $basicinfo->address }}
                     </p>
 
-                    <!-- Social Icons -->
-                    <div class="my-3 social-icons">
-                        <a href="{{ $basicinfo->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="{{ $basicinfo->linkedin }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="{{ $basicinfo->youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="{{ $basicinfo->pinterest }}" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-                    </div>
+                    
                 </div>
 
             </div>
+            <div class="copyright">
+                © 2026 {{ env('APP_NAME') }}. All Rights Reserved <a target="_blank" href="https://danpitetech.com/">Danpite Tech</a>
+            </div>
+
+
+
         </div>
     </footer>
 
