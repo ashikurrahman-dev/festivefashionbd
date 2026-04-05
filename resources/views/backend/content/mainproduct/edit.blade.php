@@ -57,6 +57,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Choose subcategory</label>
+                                <select name="subcategory_id" id="subcategory_id" class="form-control">
+                                    <option value="">Choose</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="card-body">
@@ -114,6 +123,7 @@
                 var ProductName = $("#ProductName");
                 var position = $("#position");
                 var category_id = $("#category_id");
+                var subcategory_id = $("#subcategory_id");
                 var main_proid = $("#main_proid");
                 var product = [];
                 var productCount = 0;
@@ -151,6 +161,7 @@
                 formData.append('ProductName', ProductName.val());
                 formData.append('main_proid', main_proid.val());
                 formData.append('category_id', category_id.val());
+                formData.append('subcategory_id', subcategory_id.val());
                 formData.append('position', position.val());
                 formData.append('ProductImage', $('#ProductImage')[0].files[0]);
                 product.forEach((item, index) => {
@@ -228,6 +239,67 @@
             }
         };
     </script>
+
+    <script>
+
+$(document).ready(function(){
+
+    function loadSubcategory(category_id, selected_subcategory = null){
+
+        if(category_id){
+
+            $.ajax({
+
+                url: "{{ url('/get-subcategory') }}/" + category_id,
+                type: "GET",
+
+                success:function(data){
+
+                    $('#subcategory_id').html('<option value="">Choose</option>');
+
+                    $.each(data,function(key,value){
+
+                        var selected = '';
+
+                        if(selected_subcategory == value.id){
+                            selected = 'selected';
+                        }
+
+                        $('#subcategory_id').append(
+                            '<option value="'+value.id+'" '+selected+'>'+value.sub_category_name+'</option>'
+                        );
+
+                    });
+
+                }
+
+            });
+
+        }
+
+    }
+
+    // category change
+    $('#category_id').change(function(){
+
+        var category_id = $(this).val();
+
+        loadSubcategory(category_id);
+
+    });
+
+    // page load (update mode)
+    var category_id = $('#category_id').val();
+    var selected_subcategory = "{{ $mainproduct->subcategory_id }}";
+
+    if(category_id){
+        loadSubcategory(category_id, selected_subcategory);
+    }
+
+});
+
+</script>
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\Mainproduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -20,6 +21,16 @@ class MainproductController extends Controller
     public function index()
     {
         return view('backend.content.mainproduct.index');
+    }
+
+    public function getSubcategory($id)
+    {
+        // dd($id);
+        $subcategories = Subcategory::where('category_id',$id)
+                        ->where('status','Active')
+                        ->get();
+
+        return response()->json($subcategories);
     }
 
     /**
@@ -40,9 +51,11 @@ class MainproductController extends Controller
      */
     public function storeproduct(Request $request)
     {
+        // dd($request->all());
         $mainproduct = new Mainproduct();
         $mainproduct->ProductName = $request->ProductName;
         $mainproduct->category_id = $request->category_id;
+        $mainproduct->subcategory_id = $request->subcategory_id;
         $mainproduct->position = $request->position;
         $productImg = $request->ProductImage;
         $time = microtime('.') * 10000;
@@ -159,6 +172,7 @@ class MainproductController extends Controller
         $mainproduct = Mainproduct::where('id', $request->main_proid)->first();
         $mainproduct->ProductName = $request->ProductName;
         $mainproduct->category_id = $request->category_id;
+        $mainproduct->subcategory_id = $request->subcategory_id;
         $mainproduct->position = $request->position;
         $productImg = $request->ProductImage;
         $time = microtime('.') * 10000;
