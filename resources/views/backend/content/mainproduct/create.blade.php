@@ -45,17 +45,25 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="customerPhone">Choose category</label>
+                                <label>Choose category</label>
                                 <select name="category_id" id="category_id" class="form-control">
                                     <option value="">Choose</option>
-                                    @forelse (App\Models\Category::where('status','Active')->get() as $item)
+                                    @foreach (App\Models\Category::where('status','Active')->get() as $item)
                                         <option value="{{$item->id}}">{{$item->category_name}}</option>
-                                    @empty
-
-                                    @endforelse
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Choose subcategory</label>
+                                <select name="subcategory_id" id="subcategory_id" class="form-control">
+                                    <option value="">Choose category first</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="card-body">
@@ -104,6 +112,7 @@
                 var ProductName = $("#ProductName");
                 var position = $("#position");
                 var category_id = $("#category_id");
+                var subcategory_id = $("#subcategory_id");
                 var product = [];
                 var productCount = 0;
                 $("#productTable tbody tr").each(function(index, value) {
@@ -137,6 +146,7 @@
                 formData.append('_token', token);
                 formData.append('ProductName', ProductName.val());
                 formData.append('category_id', category_id.val());
+                formData.append('subcategory_id', subcategory_id.val());
                 formData.append('position', position.val());
                 formData.append('ProductImage', $('#ProductImage')[0].files[0]);
                 product.forEach((item, index) => {
@@ -213,6 +223,42 @@ v
             }
         };
     </script>
+
+    <script>
+
+$('#category_id').change(function(){
+
+    var category_id = $(this).val();
+
+    if(category_id){
+
+        $.ajax({
+
+            url: "{{ url('/get-subcategory') }}/" + category_id,
+            type:'GET',
+            success:function(data){
+
+                $('#subcategory_id').empty();
+                $('#subcategory_id').append('<option value="">Choose</option>');
+
+                $.each(data,function(key,value){
+
+                    $('#subcategory_id').append(
+                        '<option value="'+value.id+'">'+value.sub_category_name+'</option>'
+                    );
+
+                });
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
 
 
 

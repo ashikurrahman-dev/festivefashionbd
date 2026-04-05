@@ -253,6 +253,8 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     Route::post('mainproduct/{id}', [MainproductController::class, 'update']);
     Route::put('mainproduct/status', [MainproductController::class, 'updatestatus']);
     Route::put('mainproduct/position-update', [MainproductController::class, 'positionupdate']);
+    Route::get('/get-subcategory/{id}', [MainproductController::class,'getSubcategory']);
+
 
     Route::get('admin/create/order', [OrderController::class, 'createorder']);
     Route::post('admin/order/store', [OrderController::class, 'storeorder']);

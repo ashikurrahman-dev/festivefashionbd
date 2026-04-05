@@ -17,31 +17,50 @@
                         ->select('id', 'ProductName')
                         ->first();
                 }
-                ;
+                $firstImage = json_decode(App\Models\Product::find($firstRelatedId)->PostImage, true)[0] ?? null;
+                
             @endphp
-            <div class="col-6 col-md-2">
+            <div class="col-6 col-md-3">
                 <div class="card product-card">
                     <div class="sale-discount-badge">{{ round((($firstpro->sizes[0]->RegularPrice - $firstpro->sizes[0]->SalePrice) / $firstpro->sizes[0]->RegularPrice) * 100) }}%</div>
-                    <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
-                        <img src="{{ asset($promotional->ProductImage) }}" alt="Product">
+                    <a href="{{ url('view-product/' . $promotional->ProductSlug) }}"
+                        class="product-image {{ !empty($firstImage) ? 'has-hover-img' : '' }}">
+
+                            <img class="img-default"
+                                src="{{ asset($promotional->ProductImage) }}"
+                                alt="Product">
+
+                            @if(!empty($firstImage))
+                                <img class="img-hover"
+                                    src="{{ asset('public/images/product/slider/'.$firstImage) }}"
+                                    alt="Product">
+                            @endif
+
                     </a>
 
                     <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
-                        <div class="product-info d-flex justify-content-between align-items-center">
+                        <div class="product-info ">
                             <div>
-                                <div class="product-name">{{ $promotional->ProductName }}</div>
-                                <div class="product-price">
-                                    ৳ {{ round($firstpro->sizes[0]->SalePrice) }}</div>
+                                <div class="product-name" style="text-align:center;">
+                                    {{ $promotional->ProductName }}
+                                </div>
+                                <div class="product-price" style="text-align:center;">
+                                    <del style="color: #555875;font-size: 14px;">
+                                        {{ round($firstpro->sizes[0]->RegularPrice) }}৳
+                                    </del>
+                                    {{ round($firstpro->sizes[0]->SalePrice) }}৳
+                                </div>
                             </div>
                         </div>
                     </a>
 
                     <div class="product-btn-wrap">
-                        <button type="button" class="btn quick-add-to-cart-btn quick-shop-btn d-flex justify-content-center" data-product-id="{{ $promotional->id }}">
+                        <!-- <button type="button" class="btn quick-add-to-cart-btn quick-shop-btn d-flex justify-content-center" data-product-id="{{ $promotional->id }}">
                             Add to Cart
-                        </button>
+                        </button> -->
 
-                        <a href="{{ url('view-product/' . $promotional->ProductSlug) }}" class="btn quick-buy-now-btn d-flex justify-content-center">
+                        <a href="{{ url('view-product/' . $promotional->ProductSlug) }}"
+                            class="mt-1 btn quick-buy-now-btn w-100">
                             Buy Now
                         </a>
                     </div>

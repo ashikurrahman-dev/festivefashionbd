@@ -35,14 +35,30 @@
                             ->select('id', 'ProductName')
                             ->first();
                     }
-                    ;
+                    $firstImage = json_decode(App\Models\Product::find($firstRelatedId)->PostImage, true)[0] ?? null;
                 @endphp
 
                 <div class="col-6 col-md-3">
                     <div class="card product-card">
-                        <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
+                        <!-- <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
                             <img src="{{ asset($promotional->ProductImage) }}" alt="Product">
+                        </a> -->
+                        <div class="sale-discount-badge">{{ round((($firstpro->sizes[0]->RegularPrice - $firstpro->sizes[0]->SalePrice) / $firstpro->sizes[0]->RegularPrice) * 100) }}%</div>
+                        <a href="{{ url('view-product/' . $promotional->ProductSlug) }}"
+                            class="product-image {{ !empty($firstImage) ? 'has-hover-img' : '' }}">
+
+                                <img class="img-default"
+                                    src="{{ asset($promotional->ProductImage) }}"
+                                    alt="Product">
+
+                                @if(!empty($firstImage))
+                                    <img class="img-hover"
+                                        src="{{ asset('public/images/product/slider/'.$firstImage) }}"
+                                        alt="Product">
+                                @endif
+
                         </a>
+
 
                         <div class="product-actions">
                             <button style="border:none;background:none;color:#fff;margin-bottom:-5px" class="quick-shop-btn"

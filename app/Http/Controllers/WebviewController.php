@@ -531,15 +531,21 @@ class WebviewController extends Controller
         return view('webview.content.product.category', ['categoryproducts' => $categoryproducts, 'categorysingle' => $categorysingle]);
     }
 
+    // public function subcategoryproduct($slug)
+    // {
+    //     $subcategorysingle = Subcategory::where('slug', $slug)->select('id', 'sub_category_name', 'slug', 'category_id', 'status')->first();
+    //     $subcategories = Subcategory::where('category_id', $subcategorysingle->category_id)->select('id', 'sub_category_name', 'slug', 'subcategory_icon', 'status')->get();
+    //     $categories = Category::with(['subcategories' => function ($query) {
+    //         $query->select('id', 'sub_category_name', 'slug', 'category_id', 'position')->where('status', 'Active')->orderby('position', 'desc');
+    //     },])->where('status', 'Active')->select('id', 'category_name', 'slug')->get();
+
+    //     return view('webview.content.product.subcategory', ['subcategories' => $subcategories, 'categories' => $categories, 'subcategorysingle' => $subcategorysingle]);
+    // }
     public function subcategoryproduct($slug)
     {
-        $subcategorysingle = Subcategory::where('slug', $slug)->select('id', 'sub_category_name', 'slug', 'category_id', 'status')->first();
-        $subcategories = Subcategory::where('category_id', $subcategorysingle->category_id)->select('id', 'sub_category_name', 'slug', 'subcategory_icon', 'status')->get();
-        $categories = Category::with(['subcategories' => function ($query) {
-            $query->select('id', 'sub_category_name', 'slug', 'category_id', 'position')->where('status', 'Active')->orderby('position', 'desc');
-        },])->where('status', 'Active')->select('id', 'category_name', 'slug')->get();
-
-        return view('webview.content.product.subcategory', ['subcategories' => $subcategories, 'categories' => $categories, 'subcategorysingle' => $subcategorysingle]);
+        $subcategorysingle = Subcategory::where('slug', $slug)->first();
+        $subcategoryproducts = Mainproduct::where('status', 'Active')->where('subcategory_id', $subcategorysingle->id)->get();
+        return view('webview.content.product.subcategory', ['subcategoryproducts' => $subcategoryproducts, 'subcategorysingle' => $subcategorysingle]);
     }
     public function getsubcategoryproduct(Request $request)
     {
