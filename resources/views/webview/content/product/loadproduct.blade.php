@@ -54,17 +54,36 @@
                     <div class="mx-auto">
 
                         <!-- Breadcrumb -->
-                        <h5 class="m-0 mb-2">
+                        <!-- <h5 class="m-0 mb-2">
                             <a href="{{ url('/') }}" class="text-dark">Home - </a>
                             <a href="{{ url('products/category/' . $category->slug) }}"
                                 class="text-dark">{{ $category->category_name }}
                             </a>
                             <a class="text-dark"> - {{ $productdetails->ProductName }}</a>
-                        </h5>
+                        </h5> -->
 
                         <!-- Product Title -->
                         <h4 class="m-0 mt-2 fw-bold">{{ $productdetails->ProductName }}</h4>
                         {{-- <p class="mb-2 text-muted">Mango</p> --}}
+                        @if (App\Models\Size::where('product_id', $productdetails->id)->first())
+                            <div class="mb-3 product-price strong-700"
+                                style="color:black;font-weight:bold;padding-top: 6px;" id="productPriceAmount">
+                                
+
+                                @if(App\Models\Size::where('product_id', $productdetails->id)->first()->Discount > 0)
+                                    &nbsp;<del class="old-product-price strong-400" id="regularPrice"
+                                style="color: #797474;font-size: 18px;">৳{{ round(App\Models\Size::where('product_id', $productdetails->id)->first()->RegularPrice) }}</del>@endif
+                                <span
+                                    id="salePrice">৳{{ App\Models\Size::where('product_id', $productdetails->id)->first()->SalePrice }}</span>
+                            </div>
+                        @else
+                            <div class="mb-3 product-price strong-700"
+                                style="color:black;font-weight:bold;padding-top: 6px;" id="productPriceAmount">
+                                <span id="salePrice"
+                                    style="color:black;font-weight:bold;">৳{{ App\Models\Weight::where('product_id', $productdetails->id)->first()->SalePrice }}</span>
+
+                            </div>
+                        @endif
 
                         <!-- Price Range -->
                         <div class="d-flex justify-content-between align-items-center">
@@ -75,20 +94,18 @@
                             @endphp
 
                             @if($prices->count() > 0)
-                                <h5 class="m-0 mb-1 fw-semibold">
+                                <!-- <h5 class="m-0 mb-1 fw-semibold">
                                     ৳{{ intval($minPrice) }}
-                                    {{-- @if($minPrice != $maxPrice) --}}
                                     – ৳{{ intval($maxPrice) }}
-                                    {{-- @endif --}}
-                                </h5>
+                                </h5> -->
                             @endif
-                            <div class="mb-3 text-warning">
+                            <!-- <div class="mb-3 text-warning">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Color Selection -->
@@ -160,7 +177,7 @@
                         </div>
 
                         <!-- Popup -->
-                        <div class="my-2" id="sizeChart">
+                        <div class="my-2 d-none" id="sizeChart">
                           <a href="#" data-bs-toggle="modal" data-bs-target="#sizeChartModal" style="text-decoration: underline; color:#000">
                             <i class="fas fa-ruler-combined me-2"></i> Size Chart
                           </a>
@@ -186,28 +203,11 @@
                         <!-- Price -->
                         {{-- <h4 class="mb-3 fw-bold">$285.00</h4> --}}
 
-                        @if (App\Models\Size::where('product_id', $productdetails->id)->first())
-                            <div class="mb-3 product-price strong-700"
-                                style="color:black;font-weight:bold;padding-top: 6px;" id="productPriceAmount">
-                                <span
-                                    id="salePrice">৳{{ App\Models\Size::where('product_id', $productdetails->id)->first()->SalePrice }}</span>
-
-                                @if(App\Models\Size::where('product_id', $productdetails->id)->first()->Discount > 0)
-                                    &nbsp;<del class="old-product-price strong-400" id="regularPrice"
-                                style="color: #797474;font-size: 22px;">৳{{ round(App\Models\Size::where('product_id', $productdetails->id)->first()->RegularPrice) }}</del>@endif
-                            </div>
-                        @else
-                            <div class="mb-3 product-price strong-700"
-                                style="color:black;font-weight:bold;padding-top: 6px;" id="productPriceAmount">
-                                <span id="salePrice"
-                                    style="color:black;font-weight:bold;">৳{{ App\Models\Weight::where('product_id', $productdetails->id)->first()->SalePrice }}</span>
-
-                            </div>
-                        @endif
+                        
 
                         <!-- Quantity + Buy Now + Wishlist -->
                         <p class="mb-1 fw-semibold">Quantity</p>
-                        <div class="stock-container info-container m-t-10" style="margin-top:5px;">
+                        <!-- <div class="stock-container info-container m-t-10" style="margin-top:5px;">
                             <div class="row" style="margin-bottom:5px;">
                                 <div class="col-12 qty-cart">
                                     <div class="pr-2 d-flex" style="justify-content: left;">
@@ -221,8 +221,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.row -->
-                        </div>
+                        </div> -->
                         @php
                             $coupon = App\Models\Coupon::where('status', 'Active')->where('validity', '>=', date('Y-m-d'))->first();
                             $size = App\Models\Size::where('product_id', $productdetails->id)->first();
@@ -256,27 +255,44 @@
                                 <div class="countdown" id="countdown">0D : 0H : 0M : 0S</div>
                             </div>
                         @endif
-                        <div class="gap-2 d-flex align-items-center buy-section">
-                            <form name="form" action="{{ url('add-to-cart') }}" id="submitaddtocart"
-                                method="POST" enctype="multipart/form-data" style="width:100%">
-                                @method('POST')
-                                @csrf
-                                <input type="hidden" name="color" id="product_colororder"
-                                    value="{{$varients[0]->color}}">
-                                <input type="hidden" name="size" id="product_sizeorder" value="">
-                                <input type="hidden" name="sigment" id="product_sigmentorder" value="">
-                                <input type="hidden" name="price" id="product_priceorder" value="">
+                        <div class="row">
+                                    <div class="col-4 col-lg-3">
+                                        <div class="pr-2 d-flex" style="justify-content: left;margin-top:4px;">
+                                            <div style="display: flex;background:#ddd;">
+                                                <button class="btn btn-sm" id="buttonminus" onclick="minus()">-</button>
+                                                <div class="cart-quantity" style="height: 33px;">
+                                                    <div class="quant-input">
+                                                        <input type="text" class="form-control"
+                                                            style="font-size: 20px;height: fit-content;height: 33px;padding:0px;width: 45px;text-align: center;border:none;box-shadow:none;background:#ddd;"
+                                                            value="1" id="qtyval">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-sm" id="buttonplus" onclick="plus()">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 col-lg-9 gap-2 d-flex align-items-center buy-section">
+                                        <form name="form" action="{{ url('add-to-cart') }}" id="submitaddtocart"
+                                            method="POST" enctype="multipart/form-data" style="width:100%">
+                                            @method('POST')
+                                            @csrf
+                                            <input type="hidden" name="color" id="product_colororder"
+                                                value="{{$varients[0]->color}}">
+                                            <input type="hidden" name="size" id="product_sizeorder" value="">
+                                            <input type="hidden" name="sigment" id="product_sigmentorder" value="">
+                                            <input type="hidden" name="price" id="product_priceorder" value="">
 
-                                <input type="hidden" name="product_id" value=" {{ $productdetails->id }}"
-                                    hidden>
-                                <input type="hidden" name="qty" value="1" id="qtyoror">
-                                <button type="submit" class="cart-now-btn w-100">
-                                    Add To Cart
-                                </button>
-                            </form>
-                        </div>
+                                            <input type="hidden" name="product_id" value=" {{ $productdetails->id }}"
+                                                hidden>
+                                            <input type="hidden" name="qty" value="1" id="qtyoror">
+                                            <button type="submit" class="cart-now-btn w-100">
+                                                Add To Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                            </div>
                         <!-- Quantity + Buy Now + Wishlist -->
-                        <div class="gap-2 mb-4 d-flex align-items-center buy-section">
+                        <div class="gap-2 mb-4 d-flex align-items-center buy-section" style="margin-top:-4px;">
                             <form name="form" action="{{ url('add-to-buy') }}" id="submitaddtocart"
                                 method="POST" enctype="multipart/form-data" style="width:100%">
                                 @method('POST')
@@ -321,7 +337,7 @@
                         <!--</div>-->
 
                         <!-- Need Help box -->
-                        <div class="gap-3 p-3 mb-4 help-box d-flex align-items-center">
+                        <!-- <div class="gap-3 p-3 mb-4 help-box d-flex align-items-center">
                             <i class="fa-solid fa-headset fa-2x text-secondary"></i>
                             <div>
                                 <p class="mb-1 fw-semibold">Need Help? Call Us
@@ -330,7 +346,7 @@
                                 </p>
                                 <small class="text-muted">Monday - Friday 9:00 - 17:00</small>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Description Accordion -->
                         {{-- <div class="accordion" id="productAccordion">
@@ -418,11 +434,11 @@
 
                         /* Buy now button */
                         .buy-now-btn {
-                            background-color: red;
+                            background-color: #010f1c;
                             color: #fff;
                             font-weight: 600;
                             border: none;
-                            height: 45px;
+                            height: 40px;
                             padding: 0 30px;
                             font-size: 16px;
                             border-radius: 3px;
@@ -433,12 +449,12 @@
                             background-color: red;
                         }
                         .cart-now-btn {
-                            border:1px solid red !important;
-                            background-color: transparent;
-                            color: red;
+                            /* border: 1px solid red !important; */
+                            background-color: #010f1c;
+                            color: white;
                             font-weight: 600;
                             border: none;
-                            height: 45px;
+                            height: 40px;
                             padding: 0 30px;
                             font-size: 16px;
                             border-radius: 3px;
@@ -446,7 +462,8 @@
                         }
 
                         .cart-now-btn:hover {
-                            background-color: red;
+                            background-color: #010f1c;
+                            scale:1.01;
                         }
 
                         /* Wishlist heart */

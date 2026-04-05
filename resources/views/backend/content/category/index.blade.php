@@ -40,6 +40,7 @@
                             <tr>
                                 <th>SL</th>
                                 <th>Icon</th>
+                                <th>Category Banner</th>
                                 <th>Name</th>
                                 <th>Front View</th>
                                 <th>status</th>
@@ -79,10 +80,12 @@
                             </div>
 
                             <div class="mt-4 mb-4">
+                                <label for="floatingInput">Category Image</label>
                                 <input class="form-control form-control-lg bg-dark" name="category_icon"
                                     id="category_icon" type="file">
                             </div>
                             <div class="mt-4 mb-4">
+                                <label for="floatingInput">Category Banner</label>
                                 <input class="form-control form-control-lg bg-dark" name="category_image"
                                     id="category_image" type="file">
                             </div>
@@ -127,6 +130,7 @@
                                 <label for="floatingInput">Position</label>
                             </div>
                             <div class="mt-4 mb-4">
+                                <label for="floatingInput">Category Image</label>
                                 <input class="form-control form-control-lg bg-dark" name="category_icon"
                                     id="category_icon" type="file">
                             </div>
@@ -138,6 +142,7 @@
                                 <div id="previmg" style="float: left;"></div>
                             </div>
                             <div class="mt-4 mb-4">
+                                <label for="floatingInput">Category Banner</label>
                                 <input class="form-control form-control-lg bg-dark" name="category_image"
                                     id="category_image" type="file">
                             </div>
@@ -181,9 +186,17 @@
             ajax: '{!! route('admin.category.data') !!}',
             columns: [{
                     data: 'id'
-                }, {
+                }, 
+                {
                     data: 'category_icon',
                     name: 'category_icon',
+                    render: function(data, type, full, meta) {
+                        return "<img src=../" + data + " height=\"40\" alt='No Image'/>";
+                    }
+                },
+                {
+                    data: 'category_image',
+                    name: 'category_image',
                     render: function(data, type, full, meta) {
                         return "<img src=../" + data + " height=\"40\" alt='No Image'/>";
                     }

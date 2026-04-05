@@ -256,12 +256,18 @@ function setCookieConsent(value) {
             <span class="text-dark">Categories</span>
         </a>
 
-        <a href="{{ url('checkout') }}" class="nav-item">
+        <a href="{{url('/')}}" class="nav-item active">
+            <i class="fa-solid fa-truck" style="color:#444"></i>
+            <br>
+            <span class="">Order</span>
+        </a>
+
+        <!-- <a href="{{ url('checkout') }}" class="nav-item">
             <div class="cart-icon">
                 <i class="text-white fa-solid fa-bag-shopping"></i>
             </div>
             <span class="text-dark">Cart ({{ intval(Cart::count()) }})</span>
-        </a>
+        </a> -->
 
         <a onclick="showmessage()" class="nav-item">
             <i class="fa-regular fa-message text-dark"></i>

@@ -14,7 +14,7 @@
 }
 
 .product-image {
-    height: 208px;
+    /* height: 208px; */
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -259,8 +259,8 @@ button #purcheseBtn {
     -moz-border-radius: 5px 0 0 5px;
     border-radius: 5px 0 0 5px;
     padding: 20px;
-    width: 90%;
-    border: 1px solid #ddd;
+    width: 100%;
+    border: 2px solid #010f1c;
     border-right: none;
     float: left;
 }
@@ -277,8 +277,8 @@ button #purcheseBtn {
     margin: 0px;
     padding: 9px 20px 8px;
     text-align: center;
-    background: none;
-    border: 1px solid #ddd;
+    background: #010f1c;
+    border: 2px solid #010f1c;
 }
 
 .dropbtn {
@@ -606,7 +606,7 @@ button #purcheseBtn {
 
 @media screen and (max-width: 768px) {
     .product-image {
-        height: 134px;
+        /* height: 134px; */
         width: 100%;
         position: relative;
         overflow: hidden;
@@ -644,7 +644,7 @@ button #purcheseBtn {
 .sidepanel {
     width: 0;
     position: fixed;
-    z-index: 999;
+    z-index: 1000;
     height: -webkit-fill-available;
     top: 0;
     left: 0;
@@ -746,6 +746,7 @@ button #purcheseBtn {
     line-height: 40px;
     text-align: center;
     cursor: pointer;
+    margin-top:14px;
 }
 
 .side-menu-header .side-login a {

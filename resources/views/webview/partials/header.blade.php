@@ -10,7 +10,8 @@
                         <!-- ============================================================= LOGO ============================================================= -->
                         <div class="logo" style="display: flex;justify-content:space-center">
                             <button type="button" class="d-lg-none " onclick="openNav()" id="menubutton">
-                                <img src="{{ asset('public/menu.png') }}" alt="" id="menuiconcss">
+                                <!-- <img src="{{ asset('public/menu.png') }}" alt="" id="menuiconcss"> -->
+                                 <i style="    font-size: 24px;color: black;margin-right: 10px;" class="fa-solid fa-bars"></i>
                             </button>
 
                             <a href="{{ url('/') }}" id="logoimage">
@@ -26,7 +27,7 @@
 
                         <div id="pro-search-form" style="margin-top: 10px;">
                             <div class="search-area">
-                                <div class="navbar justify-content-center">
+                                <div class="navbar">
                                     <form action="{{ url('search') }}" method="GET">
                                         <div class="control-group" style="    display: flex;">
                                             <input class="m-0 search-field" name="search" placeholder="Search here..."
@@ -39,54 +40,174 @@
                         </div>
                     </div>
                     <div class="p-0 col-3 col-sm-3 col-md-3 col-lg-2 animate-dropdown top-cart-row" id="headcart">
-                        <div class="d-none d-lg-block">
+                        <!-- <div class="d-none d-lg-block">
                             <a href="{{ url('/') }}" class="nav-link ">
                                 Track Order
                             </a>
-                        </div>
+                        </div> -->
+                        <div class="d-none d-xl-inline-block account-box" id="d-sm-none">
 
-                        <div class="dropdown-cart d-sm-none">
-                            <a href="#" class="dropdown" onclick="checkcart(this)" data-bs-toggle="dropdown"
-                                id="smcarticon">
-                                <div class="items-cart-inner">
-                                    <div class="basket cart-badge-wrapper" style="display:flex;">
-                                        <i class="fa-solid fa-cart-shopping"
-                                            style="margin-top:8px;font-size: 20px;color: #000000;"></i>
-                                        <span class="badge-count">{{ intval(Cart::count()) }}</span>
+                            @if (Auth::id())
+
+                                <a href="#" onclick="openProfileNav()" class="account-link">
+
+                                    @if(Auth::user()->profile)
+                                        <div class="account-icon">
+                                            <img src="{{ asset(Auth::user()->profile) }}">
+                                        </div>
+                                    @else
+                                        <div class="account-icon">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    @endif
+
+                                    <div class="account-text">
+                                        <span class="small-text">My</span>
+                                        <span class="big-text">Account</span>
+                                    </div>
+
+                                </a>
+
+                            @else
+
+                                <a href="{{ url('login') }}" class="account-link">
+
+                                    <div class="account-icon">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+
+                                    <div class="account-text">
+                                        <span class="small-text">Sign In</span>
+                                        <span class="big-text">Your Account</span>
+                                    </div>
+
+                                </a>
+
+                            @endif
+
+                        </div>
+                        
+                        <!-- search button -->
+                        <a type="button" class="search-button d-lg-none" onclick="showser()"
+                            style="float: right;font-size: 30px; color: #b9b9b9; margin-right: 10px;" href="#"
+                            id="smsericon"><img src="{{asset('public/search.png')}}" style="width:24px"></a>
+
+
+                        <div class="dropdown-cart" style="padding:0 10px; margin-top:6px">
+                        <a class="dropdown" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer">
+                            <div class="items-cart-inner">
+                                <div class="basket cart-badge-wrapper" style="display:flex;">
+                                  <i class="fa-solid fa-bag-shopping" style="font-size: 24px;color: #010f1c;"></i>
+                                  <span class="badge-count">{{ intval(Cart::count()) }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Right Drawer -->
+                            <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer"
+                                aria-labelledby="cartDrawerLabel">
+                                <div class="offcanvas-header border-bottom">
+                                    <h5 class="m-0 offcanvas-title" id="cartDrawerLabel">Shopping Cart</h5>
+                                    <button type="button" class="btn-close text-reset fs-3" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="offcanvas-body">
+                                    <!-- Cart Item -->
+                                    @foreach (Cart::content() as $cartProduct)
+                                        <div class="mb-3 cart-item d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ asset($cartProduct->image) }}" class="rounded me-3"
+                                                    alt="Product">
+                                                <div>
+                                                    <p class="mb-1 ">{{ $cartProduct->name }}
+                                                        ({{ $cartProduct->options->size ?? ''}})</p>
+                                                    <p class="mb-0 text-danger ">{{ $cartProduct->qty }} ×
+                                                        {{ $cartProduct->price }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="p-0 btn btn-link text-dark fs-5"
+                                                onclick="removeFromCartItemCart('{{ $cartProduct->rowId }}')">
+                                                <i class="fa-solid fa-circle-xmark"></i>
+                                            </button>
+                                        </div>
+                                        <hr>
+                                    @endforeach
+
+                                    <!-- Subtotal -->
+                                    <div class="mb-3 d-flex justify-content-between align-items-center fs-5">
+                                        <span>Subtotal:</span>
+                                        <span>৳{{ Cart::subtotalFloat() }}</span>
+                                    </div>
+
+                                    <!-- Buttons -->
+                                    <div class="gap-2 d-grid">
+                                        <a href="{{ url('checkout') }}" class="py-2 btn btn-danger ">Checkout</a>
                                     </div>
                                 </div>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li id="checkcartview">
-                                </li>
-                            </ul>
-                            <!-- /.dropdown-menu-->
-                        </div>
+                            </div>
+                        <!-- /.dropdown-menu-->
+                    </div>
+                    <style>
+                        .offcanvas-end {
+                            width: 350px !important;
+                            max-width: 100%;
+                        }
 
+                        .cart-item img {
+                            width: 70px !important;
+                            height: 70px;
+                            object-fit: cover;
+                        }
 
-                        <div class="d-none d-xl-inline-block" id="d-sm-none" style="margin-top: -4px;">
-                            @if (Auth::id())
-                                @if(Auth::user()->profile)
-                                    <a href="#" type="button" onclick="openProfileNav()" style="color: #000000;font-size:20px"><img src="{{ asset(Auth::user()->profile) }}" style="width: 25px;"></a>
-                                @else
-                                    <a href="#" type="button" onclick="openProfileNav()" style="color: #000000;font-size:20px"><i class="fa-solid fa-user"></i></a>
-                                @endif
-                            @else
-                                <a href="{{ url('login') }}" id="iconhead" style="padding-right: 16px;"><i
-                                        class="fa-solid fa-user"></i></a>
-                            @endif
-                        </div>
+                        .cart-item h6 {
+                            font-size: 15px;
+                            color: #333;
+                        }
+
+                        .cart-item p {
+                            font-size: 14px;
+                        }
+
+                        .btn-outline-danger {
+                            border-color: #f15a29;
+                            color: #f15a29;
+                        }
+
+                        .btn-outline-danger:hover {
+                            background-color: #f15a29;
+                            color: #fff;
+                        }
+
+                        .btn-danger {
+                            background-color: #f15a29;
+                            border: none;
+                        }
+
+                        .cart-items {
+                            max-height: calc(100vh - 200px);
+                            overflow-y: auto;
+                        }
+
+                        .cart-items::-webkit-scrollbar {
+                            width: 6px;
+                        }
+
+                        .cart-items::-webkit-scrollbar-thumb {
+                            background: #ccc;
+                            border-radius: 3px;
+                        }
+                    </style>
+
 
                         <!-- /.dropdown-cart -->
 
-                        <a type="button" class="search-button d-lg-none" onclick="showser()"
-                            style="float: right;font-size: 30px; color: #b9b9b9; margin-right: 10px;" href="#"
-                            id="smsericon"><img src="{{asset('public/search.png')}}" style="width:30px"></a>
+                        
                         <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= -->
                         <input type="text" id="valcheck" value="0" hidden>
 
 
-                        <div class="dropdown-cart d-lg-none">
+                        <!-- <div class="dropdown-cart d-lg-none">
                             <a href="{{ url('track-order') }}" class="dropdown">
                                 <div class="items-cart-inner">
                                     <div class="basket cart-badge-wrapper" style="display:flex;">
@@ -95,8 +216,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <!-- /.dropdown-menu-->
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /.top-cart-row -->
 
@@ -120,26 +240,84 @@
                 <div class="d-sm-none">
                     <div id="nav-item" style="padding: 8px;display:flex !important;">
                         <div class="menus">
-                            <ul>
-                                @foreach ($categories as $category)
-                                    <li style="float: left;list-style: none;margin: 0 10px;">
-                                        <a class="category-btn dropdown-toggle" id="shopDropdown" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"
-                                            style="cursor: pointer;color:#222;font-size:18px;display: block;position: relative;">{{ $category->category_name }}
+                            <!-- <ul> -->
+                                <ul class="category-menu">
+                                    @foreach ($categories as $category)
+
+                                    <li class="category-item">
+
+                                        <a href="{{ url('products/category/' . $category->slug) }}" class="category-btn">
+                                            {{ $category->category_name }}
+
+                                            @if($category->subcategories->count() > 0)
+                                                <span class="dropdown-icon">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </span>
+                                            @endif
                                         </a>
-                                        <div class="p-3 dropdown-menu submenu-container" aria-labelledby="shopDropdown">
+
+                                        @if($category->subcategories->count() > 0)
+                                        <div class="submenu-container">
                                             <div class="row">
                                                 @foreach ($category->subcategories as $subcategory)
                                                     <div class="col submenu-column">
-                                                        <h6 style="margin:6px auto;"><a class="text-dark"
-                                                                href="{{ url('products/sub/category/' . $subcategory->slug) }}">{{ $subcategory->sub_category_name }}</a>
+                                                        <h6 class="m-0">
+                                                            <a href="{{ url('products/sub/category/' . $subcategory->slug) }}">
+                                                                {{ $subcategory->sub_category_name }}
+                                                            </a>
                                                         </h6>
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
+                                        @endif
+
                                     </li>
-                                @endforeach
+
+                                    @endforeach
+                                </ul>
+
+<style>
+ .category-menu{
+    display:flex;
+    gap:20px;
+}
+
+.category-item{
+    position:relative;
+    list-style:none;
+}
+
+.category-btn{
+    cursor:pointer;
+    color:#222;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.dropdown-icon{
+    font-size:12px;
+}
+
+.submenu-container{
+    position:absolute;
+    top:100%;
+    left:0;
+    background:#fff;
+    width:250px;
+    padding:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    display:none;
+    z-index:9999;
+}
+
+.category-item:hover .submenu-container{
+    display:block;
+}
+
+</style>
 
 
 
@@ -194,7 +372,7 @@
                                         style="display: block;color:#000000">About-Us</a></li>
                                 <li style="float: left;list-style: none;margin: 0 10px;"><a href="{{ url('track-order') }}"
                                         style="display: block;color:#000000">Track Order</a></li> --}}
-                            </ul>
+                            <!-- </ul> -->
                         </div>
                     </div>
                 </div>
@@ -214,16 +392,62 @@
                     <a style="font-size: 16px" href="#">Categories</a>
                 </div>
             </div>
-            <ul class="level1-styles collapse show" id="id0">
+            <ul class="level1-styles">
 
-                @forelse ($categories as $category)
-                    <li>
-                        <a href="{{ url('products/category/' . $category->slug) }}">{{ $category->category_name }} </a>
-                    </li>
-                @empty
-                @endforelse
+@foreach ($categories as $category)
 
-            </ul>
+<li>
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+
+        <a href="{{ url('products/category/' . $category->slug) }}">
+            {{ $category->category_name }}
+        </a>
+
+        @if($category->subcategories->count() > 0)
+            <span data-bs-toggle="collapse" data-bs-target="#cat{{ $category->id }}" 
+                  style="cursor:pointer;font-weight:bold;">
+                +
+            </span>
+        @endif
+
+    </div>
+
+    @if($category->subcategories->count() > 0)
+        <ul class="collapse ps-3" id="cat{{ $category->id }}">
+            @foreach ($category->subcategories as $subcategory)
+                <li>
+                    <a href="{{ url('products/sub/category/' . $subcategory->slug) }}">
+                        {{ $subcategory->sub_category_name }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+
+</li>
+
+@endforeach
+
+</ul>
+<style>
+    .level1-styles li{
+    list-style:none;
+    margin:8px 0;
+}
+
+.level1-styles a{
+    text-decoration:none;
+    color:#000;
+}
+
+.level1-styles span{
+    font-size:18px;
+    font-size: 24px;
+    margin-right:16px;
+}
+
+</style>
         </div>
 
         <!-- side bar panel start -->
