@@ -224,10 +224,10 @@
                         <form action="{{url('search')}}" method="GET">
                             <div class="input-group">
                                 <input type="text" name="search" id="search" class="form-control"
-                                    placeholder="Search for products" style="border-radius: 4px 0px 0px 4px;margin:0;">
+                                    placeholder="Search for products" style="border-radius: 4px 0px 0px 4px;margin:0;border: 2px solid #010f1c;box-shadow:none;">
                                 <div class="input-group-append">
                                     <button type="submit" class="input-group-text bg-primary text-light"
-                                        style="background: red !important;padding: 10.7px;margin-bottom: 2px;margin-left: -10px;margin-top: -1px;border-radius: 0px 4px 4px 0px;">
+                                        style="background: #010f1c !important;padding: 10.7px;margin-bottom: 2px;margin-left: -10px;margin-top: -1px;border-radius: 0px 4px 4px 0px;">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
