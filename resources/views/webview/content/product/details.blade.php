@@ -543,9 +543,9 @@
                                             @csrf
                                             <input type="hidden" name="color" id="product_colororder"
                                                 value="{{$varients[0]->color}}">
-                                            <input type="hidden" name="size" id="product_sizeorder" value="">
+                                            <input type="hidden" name="size" id="product_sizeorderbuy" value="">
                                             <input type="hidden" name="sigment" id="product_sigmentorder" value="">
-                                            <input type="hidden" name="price" id="product_priceorder" value="">
+                                            <input type="hidden" name="price" id="product_priceorderbuy" value="">
 
                                             <input type="hidden" name="product_id" value=" {{ $productdetails->id }}"
                                                 hidden>
@@ -1080,34 +1080,53 @@
                                             ->select('id', 'ProductName')
                                             ->first();
                                     }
-                                    ;
+                                    $firstImage = json_decode(App\Models\Product::find($firstRelatedId)->PostImage, true)[0] ?? null;
                                 @endphp
                                 @if (isset($firstpro))
-                                    <div class="col-6 col-md-2">
+                                    <div class="col-6 col-md-3">
                                         <div class="card product-card">
                                             <div class="sale-discount-badge">
                                                 {{ round((($firstpro->sizes[0]->RegularPrice - $firstpro->sizes[0]->SalePrice) / $firstpro->sizes[0]->RegularPrice) * 100) }}%
                                             </div>
-                                            <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
-                                                <img src="{{ asset($promotional->ProductImage) }}" alt="Product">
+                                            <a href="{{ url('view-product/' . $promotional->ProductSlug) }}"
+                                                class="product-image {{ !empty($firstImage) ? 'has-hover-img' : '' }}">
+
+                                                    <img class="img-default"
+                                                        src="{{ asset($promotional->ProductImage) }}"
+                                                        alt="Product">
+
+                                                    @if(!empty($firstImage))
+                                                        <img class="img-hover"
+                                                            src="{{ asset('public/images/product/slider/'.$firstImage) }}"
+                                                            alt="Product">
+                                                    @endif
+
                                             </a>
 
                                             <a href="{{ url('view-product/' . $promotional->ProductSlug) }}">
-                                                <div class="product-info d-flex justify-content-between align-items-center">
+                                                <div class="product-info ">
                                                     <div>
-                                                        <div class="product-name">{{ Str::limit($promotional->ProductName, 20) }}</div>
-                                                        <div class="product-price">
-                                                            ৳{{ round($firstpro->sizes[0]->SalePrice) }}</div>
+                                                        <div class="product-name" style="text-align:center;">
+                                                            {{ $promotional->ProductName }}
+                                                        </div>
+                                                        <div class="product-price" style="text-align:center;">
+                                                            <del style="color: #555875;font-size: 14px;">
+                                                                {{ round($firstpro->sizes[0]->RegularPrice) }}৳
+                                                            </del>
+                                                            {{ round($firstpro->sizes[0]->SalePrice) }}৳
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </a>
 
-                                            <div class="product-btn-wrap">
-                                                <button type="button" class="btn quick-add-to-cart-btn quick-shop-btn d-flex justify-content-center" data-product-id="{{ $promotional->id }}">
-                                                    Add to Cart
-                                                </button>
 
-                                                <a href="{{ url('view-product/' . $promotional->ProductSlug) }}" class="btn quick-buy-now-btn d-flex justify-content-center">
+                                            <div class="product-btn-wrap">
+                                                <!-- <button type="button" class="btn quick-add-to-cart-btn quick-shop-btn d-flex justify-content-center" data-product-id="{{ $promotional->id }}">
+                                                    Add to Cart
+                                                </button> -->
+
+                                                <a href="{{ url('view-product/' . $promotional->ProductSlug) }}"
+                                                    class="mt-1 btn quick-buy-now-btn w-100">
                                                     Buy Now
                                                 </a>
                                             </div>
@@ -1431,11 +1450,13 @@
 
         function getsize(size) {
             $('#product_sizeorder').val(size);
+            $('#product_sizeorderbuy').val(size);
             var reg = '৳'+ $('#regularpriceofsize' + size).val();
-            var sale = '৳'+ $('#salepriceofsize' + size).val();
+            var sale = $('#salepriceofsize' + size).val();
             $('#product_price').val(sale);
             $('#product_priceorder').val(sale);
-            $('#salePrice').html(sale);
+            $('#product_priceorderbuy').val(sale);
+            $('#salePrice').html('৳' + sale);
             $('#regularPrice').html(reg);
 
             $('.sizetext').css('color', '#000');

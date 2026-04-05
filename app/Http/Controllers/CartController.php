@@ -17,6 +17,7 @@ class CartController extends Controller
 {
     public function addtocart(Request $request)
     {
+        // dd($request->all());
 
       $pid = $request->product_id;
       $cartProduct = Product::find($pid);
@@ -61,6 +62,7 @@ class CartController extends Controller
     }
     public function addtobuy(Request $request)
     {
+// dd($request->all());
 
       $pid = $request->product_id;
       $cartProduct = Product::find($pid);
