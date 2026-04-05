@@ -76,10 +76,13 @@
             footer {
                 padding-bottom: 75px;
             }
+            .mobile-copyright-show{
+                margin-bottom: 60px;
+            }
         }
     </style>
     <footer class="pt-5 pb-4 text-light">
-        <div class="container">
+        <div class="container mobile-copyright-show">
             <div class="row gy-4" style="border-bottom: 2px solid white;">
 
                 <!-- Logo + Description -->
