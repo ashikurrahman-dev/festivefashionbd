@@ -1,4 +1,5 @@
 /********** Template CSS **********/
+
 :root {
     --primary: #0000;
     --secondary: #fff;
@@ -120,7 +121,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 200px;
+    width: 250px;
     height: 100vh;
     overflow-y: auto;
     background: var(--secondary);
@@ -129,9 +130,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 .content {
-    margin-left: 200px;
+    margin-left: 250px;
     min-height: 100vh;
-    background: var(--dark);
+    background: #f5f7ff;
     transition: 0.5s;
 }
 
@@ -141,11 +142,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     }
 
     .sidebar.open {
-        margin-left: -200px;
+        margin-left: -250px;
     }
 
     .content {
-        width: calc(100% - 200px);
+        width: calc(100% - 250px);
     }
 
     .content.open {
@@ -179,12 +180,46 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border-radius: 0 30px 30px 0;
     outline: none;
 }
+.sidebar .navbar .navbar-nav .new-nav-link {
+    padding: 7px 20px;
+    color: var(--light);
+    font-weight: 500;
+    border-left: 3px solid var(--secondary);
+    border-radius: 0 30px 30px 0;
+    outline: none;
+}
+
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
     color:#000;
     background: var(--dark);
     border-color: var(--primary);
+}
+.sidebar .navbar .navbar-nav .new-nav-link:hover,
+.sidebar .navbar .navbar-nav .new-nav-link.active {
+    color: #4f92ff;
+    background: var(--dark);
+    border-color: var(--primary);
+}
+
+.dropdown-menu a:hover{
+    color:#4f92ff !important;
+}
+
+.top-title{
+    font-weight: 500;
+    pointer-events: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    background: var(--sidebarheadingbackground);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    display: block;
+    padding: 10px 10px 7px 10px;
+    margin: 10px;
+    color: var(--sidebarheadingcolor);
+    margin-bottom:2px;
 }
 
 .sidebar .navbar .navbar-nav .nav-link i {
@@ -196,6 +231,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     background: var(--dark);
     border-radius: 40px;
 }
+.sidebar .navbar .navbar-nav .new-nav-link i {
+    align-items: center;
+    justify-content: center;
+}
 
 .sidebar .navbar .navbar-nav .nav-link:hover i,
 .sidebar .navbar .navbar-nav .nav-link.active i {
@@ -204,7 +243,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-    top: 15px;
+    top: 2px;
     right: 15px;
     border: none;
     content: "\f107";
@@ -218,9 +257,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 .sidebar .navbar .dropdown-item {
-    padding-left: 25px;
+    padding-left: 45px;
     border-radius: 0 30px 30px 0;
     color: var(--light);
+    font-size:13px;
 }
 
 .sidebar .navbar .dropdown-item:hover,
