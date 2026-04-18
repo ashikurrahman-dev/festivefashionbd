@@ -19,8 +19,81 @@
             font-size: 1.3rem;
         }
     </style>
+    
+    <div class="container-fluid px-4 pt-4">
+    <div class="row g-3">
 
-    <div class="px-4 pt-4 container-fluid">
+        <!-- Card 1 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <i class="fa-solid fa-cloud-arrow-up fa-2x mb-2"></i>
+                <div class="fw-bold">প্রোডাক্ট আপলোড</div>
+            </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <div class="fw-bold fs-5">২১৯</div>
+                <div>টোটাল প্রোডাক্ট</div>
+            </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <div class="fw-bold fs-5">৫০২</div>
+                <div>টোটাল কাস্টমার</div>
+            </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <div class="fw-bold fs-5">১৮৬</div>
+                <div>আজকের অর্ডার</div>
+            </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <div class="fw-bold fs-5">২০৬</div>
+                <div>পেন্ডিং অর্ডার</div>
+            </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col">
+            <a href="#" class="dashboard-card text-center d-block">
+                <div class="fw-bold fs-5">২১,৮৪৩</div>
+                <div>প্রসেসিং অর্ডার</div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+<style>
+.dashboard-card {
+    background: white;
+    padding: 20px 10px;
+    border-radius: 6px;
+    color: #3b82f6;
+    text-decoration: none;
+    transition: 0.3s;
+    min-width: 180px;
+}
+
+.dashboard-card:hover {
+    background: #e2e6ea;
+    transform: translateY(-3px);
+}
+</style>
+
+
+    <!-- <div class="px-4 pt-4 container-fluid">
 
         <div  id="print-area">
         <div class="mb-4 row g-4">
@@ -480,7 +553,7 @@
 
                 </div>
             </div>
-        </div><!-- End popup Modal-->
+        </div>
 
 
 
@@ -529,66 +602,66 @@
             </div>
         @endif
     </div>
-        <!-- Sale & Revenue End -->
-        <div class="modal fade" id="editmainTask" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="rounded modal-content h-100">
-                    <div class="modal-header">
-                        <h5 class="modal-title" style="color: red;">Edit Task</h5>
-                        <button type="button" class="btn-dark btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
 
-                        <form name="form" id="EditTask" enctype="multipart/form-data">
-                            @csrf
-                            @if(Auth::user()->id == 1)
-                            <div class="mb-3 form-group">
-                                <label for="floatingInput">Choose User For Assign Task</label>
-                                <select class="form-control" id="admin_id" name="admin_id">
-                                    <option value="">Choose</option>
-                                    @forelse(App\Models\Admin::all() as $adm)
-                                        <option value="{{$adm->id}}">{{$adm->name}}</option>
-                                    @empty
+    <div class="modal fade" id="editmainTask" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="rounded modal-content h-100">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: red;">Edit Task</h5>
+                    <button type="button" class="btn-dark btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-                                    @endforelse
-                                </select>
-                            </div>
-                            @endif
-                            <input type="hidden" name="type" value="courier">
-                            <div class="mb-3 form-floating">
-                                <input type="date" class="form-control datepicker" value="{{date('Y-m-d')}}" name="date" min="{{date('Y-m-d')}}" id="date"
-                                    placeholder="Date">
-                                <label for="floatingInput">Date</label>
-                            </div>
-                            <div class="mb-3 form-floating">
-                                <input type="text" class="form-control" name="task_name" id="task_name"
-                                    placeholder="Title">
-                                <label for="floatingInput">Customer Number</label>
-                            </div>
+                    <form name="form" id="EditTask" enctype="multipart/form-data">
+                        @csrf
+                        @if(Auth::user()->id == 1)
+                        <div class="mb-3 form-group">
+                            <label for="floatingInput">Choose User For Assign Task</label>
+                            <select class="form-control" id="admin_id" name="admin_id">
+                                <option value="">Choose</option>
+                                @forelse(App\Models\Admin::all() as $adm)
+                                    <option value="{{$adm->id}}">{{$adm->name}}</option>
+                                @empty
 
-                            <div class="mb-3 form-group">
-                                <label for="floatingInput">Notes</label>
-                                <textarea class="form-control" name="message" id="message" rows="4"></textarea>
-                            </div>
-                            <input type="text" name="task_id" id="task_id" hidden>
+                                @endforelse
+                            </select>
+                        </div>
+                        @endif
+                        <input type="hidden" name="type" value="courier">
+                        <div class="mb-3 form-floating">
+                            <input type="date" class="form-control datepicker" value="{{date('Y-m-d')}}" name="date" min="{{date('Y-m-d')}}" id="date"
+                                placeholder="Date">
+                            <label for="floatingInput">Date</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <input type="text" class="form-control" name="task_name" id="task_name"
+                                placeholder="Title">
+                            <label for="floatingInput">Customer Number</label>
+                        </div>
 
-                            <br>
-                            <div class="mt-2 form-group" style="text-align: right">
-                                <div class="submitBtnSCourse">
-                                    <button type="submit" name="btn" data-bs-dismiss="modal"
-                                        class="btn btn-dark" style="float: left">Close</button>
-                                    <button type="submit" name="btn"
-                                        class="btn btn-primary AddTaskBtn">Update</button>
-                                </div>
-                            </div>
-                        </form>
+                        <div class="mb-3 form-group">
+                            <label for="floatingInput">Notes</label>
+                            <textarea class="form-control" name="message" id="message" rows="4"></textarea>
+                        </div>
+                        <input type="text" name="task_id" id="task_id" hidden>
 
-                    </div>
+                        <br>
+                        <div class="mt-2 form-group" style="text-align: right">
+                            <div class="submitBtnSCourse">
+                                <button type="submit" name="btn" data-bs-dismiss="modal"
+                                    class="btn btn-dark" style="float: left">Close</button>
+                                <button type="submit" name="btn"
+                                    class="btn btn-primary AddTaskBtn">Update</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
+
             </div>
-        </div><!-- End popup Modal-->
+        </div>
+    </div> -->
 
     <script>
         $(document).ready(function(){
